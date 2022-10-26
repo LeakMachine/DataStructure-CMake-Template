@@ -3,63 +3,56 @@
 
 
 #include <iostream>
-#include <stdexcept>
-#include <cassert>
 
-template <typename T>
 class Stack {
 private:
-  T* data;
-  size_t top;
-  size_t size;
-  bool isFull = []() {if (top == size - 1) { return true } else { return false } };
-  bool isEmpty = []() {if (top == -1) { return true } else { return false } };
+    int* data;
+    int top1;
+    int size;
+
 public:
-  explicit Stack(size_t _size = 1) : size(_size) {
-    if (sz == 0)
-      throw std::out_of_range("Stack size should be greater than zero");
-    data = new T[size]();
-  }
-  Stack(T* _data, size_t s) : size(s) {
-      assert(_data != nullptr && "Stack ctor requires non-nullptr arg");
-      data = new T[size];
-      std::copy(_data, _data + size, data);
-  }
-  ~Stack() {
-    delete[] data;
-    top = -1;
-    size = 0;
-  }
-  void push(const T& val) {
-    if (!isFull()) {
-      top++;
-      data[top] = val;
-    } 
-    else {
-      throw std::logic_error("ERROR in PUSH: Stack is full!");
+    bool isFull() { if (top1 == size - 1) { return true; } else { return false; } };
+    bool isEmpty() { if (top1 == -1) { return true; } else { return false; } };
+    Stack(int _size) {
+        if (_size < 1) {
+            throw std::logic_error("Size can't be lower than 1");
+        }
+        size = _size;
+        top1 = -1;
+        data = new int[size];
     }
-  };
-  void pop() {
-    if (!isEmpty()) {
-      top--;
+    ~Stack() {
+        delete[] data;
+        top1 = -1;
+        size = 0;
     }
-    else {
-      throw std::logic_error("ERROR in POP: Stack is empty!");
+    void push(const int& val) {
+        if (!isFull()) {
+            top1++;
+            data[top1] = val;
+        }
+        else {
+            throw std::logic_error("ERROR in PUSH: Stack is full!");
+        }
     }
-  };
-  void top() {
-    std::cout << data[top] << std::endl;
-  };
+    int pop() {
+        int val;
+        if (!isEmpty()) {
+            val = data[top1];
+            top1--;
+        }
+        else {
+            throw std::logic_error("ERROR in POP: Stack is empty!");
+        }
 
-
-  friend std::ostream& operator<<(std::ostream& ostr, const Stack& s) {
-    for (size_t i = 0; i < size; i++) {
-      ostr << data[size] << std::endl;
+        return val;
     }
-    return ostr;
-  }
-
-
+    int top() {
+        if (isEmpty()) {
+            throw std::logic_error("ERROR in TOP: Stack is Empty!");
+        }
+        return data[top1];
+    }
 };
 
 #endif
