@@ -1,10 +1,5 @@
 // Copyright 2022 Marina Usova
-
-#include <gtest.h>
-#include "../lib_example/example.h"
-
-#define EPSILON 0.000001
-
+/*
 TEST(test_lib, can_div_test) {
   // Arrange
   int x = 10;
@@ -48,3 +43,10 @@ TEST(test_lib, can_div_correctly_with_remainder_test) {
   float expected_result = 1.25;
   EXPECT_NEAR(expected_result, result, EPSILON);
 }
+
+*/
+#include <gtest.h>
+#include "../lib_example/example.h"
+
+#define EPSILON 0.000001
+
