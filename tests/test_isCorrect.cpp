@@ -1,10 +1,7 @@
-// Copyright 2022 Marina Usova
-
-#include <stdio.h>
-#include "../lib_example/example.h"
+#include <gtest.h>
 #include "../lib_stack/stack.h"
 
-bool openingChar(char _chr) {
+/*bool openingChar(char _chr) {
 	if (_chr == '(' || _chr == '[' || _chr == '{')
 		return true;
 	else
@@ -37,9 +34,6 @@ bool isCorrect(std::string BracketsSequence) {
 	char tempChar;
 	for (int i = 0; i < BracketsSequence.size(); i++) {
 		tempChar = BracketsSequence[i];
-		if (!(openingChar(tempChar) && !(closingChar(tempChar)))) {
-			throw std::logic_error("Wrong char");
-		}
 		if (openingChar(tempChar)) {
 			tempStack.push(tempChar);
 		}
@@ -59,13 +53,29 @@ bool isCorrect(std::string BracketsSequence) {
 		return true;
 }
 
-void main() {
-	std::string testString("}(){}[])");
+TEST(test_main, correct_string_is_recognised) {
+	std::string testString("[()](([]){})");
 
-	if (isCorrect(testString)) {
-		std::cout << "CORRECT!!!" << std::endl;
-	}
-	else {
-		std::cout << "INCORRECT!!!" << std::endl;
-	}
+	EXPECT_TRUE(isCorrect(testString));
 }
+TEST(test_main, incorrect_string_is_recognised) {
+	std::string testString("[{()}}]");
+
+	EXPECT_FALSE(isCorrect(testString));
+}
+
+TEST(test_main, incorrect_string_is_recognised_because_stack_not_empty) {
+	std::string testString("[{()}]{]");
+
+	EXPECT_FALSE(isCorrect(testString));
+}
+TEST(test_main, incorrect_string_is_recognised_because_first_element_is_closing) {
+	std::string testString("}(){}[]");
+
+	EXPECT_FALSE(isCorrect(testString));
+}
+TEST(test_main, recognises_incorrect_character) {
+	std::string testString("<}>(){}[]");
+
+	ASSERT_ANY_THROW(isCorrect(testString));
+}*/

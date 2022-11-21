@@ -1,12 +1,17 @@
+// Copyright 2022 Vinokurov Ivan
+
 #ifndef LIB_STACK_STACK_H_
 #define LIB_STACK_STACK_H_
 
-
+#include "../lib_datastructure/data_structure.h"
 #include <iostream>
 
-class Stack {
+template <class Type> class Stack;
+
+template <class Type>
+class Stack : public DataStructure<Type> {
 private:
-    int* data;
+    Type* data;
     int top1;
     int size;
 
@@ -19,14 +24,14 @@ public:
         }
         size = _size;
         top1 = -1;
-        data = new int[size];
+        data = new Type[size];
     }
     ~Stack() {
         delete[] data;
         top1 = -1;
         size = 0;
     }
-    void push(const int& val) {
+    void push(const Type& val) {
         if (!isFull()) {
             top1++;
             data[top1] = val;
@@ -35,8 +40,8 @@ public:
             throw std::logic_error("ERROR in PUSH: Stack is full!");
         }
     }
-    int pop() {
-        int val;
+    Type pop() {
+        Type val;
         if (!isEmpty()) {
             val = data[top1];
             top1--;
@@ -47,7 +52,7 @@ public:
 
         return val;
     }
-    int top() {
+    Type top() {
         if (isEmpty()) {
             throw std::logic_error("ERROR in TOP: Stack is Empty!");
         }
