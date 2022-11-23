@@ -20,12 +20,6 @@ public:
 	void print() {
 		std::cout << data << " -> ";
 	}
-	CNode* getNext() {
-		return next;
-	}
-	int getData() {
-		return data;
-	}
 
 	friend class CList;
 };
@@ -104,21 +98,19 @@ public:
 	}
 	int pop_back() {
 		CNode* toRet = tail;
-		int temp = toRet->getData();
+		int temp = toRet->data;
 		if (head != tail) {
-			tail = nullptr;
 			CNode* toDel = head;
-			while (toDel->next != nullptr) {
+			while (toDel->next != tail) {
 				toDel = toDel->next;
 			}
-			toRet = toDel;
+			delete tail;
 			tail = toDel;
-			delete toDel;
 			return temp;
 		}
 		else {
-			tail = nullptr;
-			head = nullptr;
+			delete tail;
+			delete head;
 			return temp;
 		}
 	

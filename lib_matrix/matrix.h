@@ -271,11 +271,9 @@ class TDynamicMatrix : public TDynamicVector<TDynamicVector<T>> {
       }
       TDynamicMatrix tmp(sz);
       for (int i = 0; i < sz; i++) {
-          for (int j = 0; j < sz; j++) {
-              tmp.pMem[i][j] = pMem[i][j] - m.pMem[i][j];
-          }
+          tmp.pMem[i] = pMem[i] - m.pMem[i];
       }
-      return tmp;
+      return TDynamicVector<TDynamicVector<T>>::operator-(m);
   }
 
   TDynamicMatrix& operator*(const TDynamicMatrix& m) {

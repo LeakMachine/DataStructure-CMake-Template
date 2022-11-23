@@ -2,7 +2,7 @@
 
 #include <gtest.h>
 #include "../lib_matrix/matrix.h"
-/*
+
 TEST(TDynamicMatrix, can_create_matrix_with_positive_length) {
   ASSERT_NO_THROW(TDynamicMatrix<int> m(5));
 }
@@ -28,15 +28,10 @@ TEST(TDynamicMatrix, copied_matrix_is_equal_to_source_one) {
 }
 
 TEST(TDynamicMatrix, copied_matrix_has_its_own_memory) {
-	/*	TDynamicMatrix<int> m(2);
-	std::cin >> m;
-	TDynamicMatrix<int> m3(2);
+	TDynamicMatrix<int> m(2);
 	TDynamicMatrix<int> m2(m);
-	m2 = m3;
-	std::cin >> m2;
-	std::cout << m2;
 
-	EXPECT_NE(m, m2);
+	EXPECT_NE(&m, &m2);
 
 }
 
@@ -75,8 +70,8 @@ TEST(TDynamicMatrix, can_assign_matrices_of_equal_size) {
 TEST(TDynamicMatrix, assign_operator_change_matrix_size) {
 	TDynamicMatrix<int> m(2);
 	TDynamicMatrix<int> m2(4);
+	m = m2;
 	EXPECT_EQ(m.size(), 4);
-	ASSERT_NO_THROW(m = m2);
 }
 
 TEST(TDynamicMatrix, can_assign_matrices_of_different_size) {
@@ -102,7 +97,7 @@ TEST(TDynamicMatrix, matrices_with_different_size_are_not_equal) {
 	EXPECT_TRUE(m != m2);
 }
 
-TEST(TDynamicMatrix, can_add_matrices_with_equal_size) {
+/*TEST(TDynamicMatrix, can_add_matrices_with_equal_size) {
 	TDynamicVector<int> m(2);
 	std::cin >> m;
 	std::cout << m;
@@ -121,7 +116,8 @@ TEST(TDynamicMatrix, can_add_matrices_with_equal_size) {
 	m4 = m * 2;
 	std::cout << m4;
 	EXPECT_EQ(m4, m3);
-}
+	
+}*/
 
 TEST(TDynamicMatrix, cant_add_matrices_with_not_equal_size) {
 	TDynamicMatrix<int> m(2);
@@ -131,14 +127,10 @@ TEST(TDynamicMatrix, cant_add_matrices_with_not_equal_size) {
 
 TEST(TDynamicMatrix, can_subtract_matrices_with_equal_size) {
 	TDynamicMatrix<int> m(2);
-	std::cin >> m;
 	TDynamicMatrix<int> m2(2);
-	std::cin >> m2;
 	TDynamicMatrix<int> m3(2);
-	std::cin >> m3;
 	TDynamicMatrix<int> m4(2);
 	m4 = m - m2;
-	std::cout << m4;
 	EXPECT_EQ(m4, m3);
 }
 
@@ -147,4 +139,4 @@ TEST(TDynamicMatrix, cant_subtract_matrixes_with_not_equal_size) {
 	TDynamicMatrix<int> m2(1);
 	ASSERT_ANY_THROW(m - m2);
 }
-*/
+

@@ -1,8 +1,7 @@
 // Copyright 2022 Marina Usova
-
 #include <gtest.h>
 #include "../lib_lsq/lsq.h"
-TEST(test_lib_stack, can_create_stack) {
+/*TEST(test_lib_stack, can_create_stack) {
 	ASSERT_NO_THROW(Stack<int> s1(10));
 }
 TEST(test_lib_stack, cant_create_stack_if_negative_size) {
@@ -53,9 +52,7 @@ TEST(test_lib_queue, cant_create_queue_if_negative_size) {
 TEST(test_lib_queue, can_correctly_get_top) {
 	Queue<int> q(5);
 	q.push(3);
-	int res;
-	res = q.top();
-	//res->print();
+	EXPECT_EQ(q.top(), 3);
 	EXPECT_FALSE(q.isEmpty());
 }
 TEST(test_lib_queue, can_correctly_use_pop) {
@@ -85,12 +82,13 @@ TEST(test_lib_queue, can_correctly_push_if_full_and_has_empty_space_in_beginning
 	res = q.pop();
 	EXPECT_EQ(res, 4);
 	int res1;
-	res1 = q.pop();
-	EXPECT_EQ(res1, 5);
+	res = q.pop();
+	EXPECT_EQ(res, 5);
 	int res2;
-	res2 = q.pop();
-	EXPECT_EQ(res2, 1);
+	res = q.pop();
+	EXPECT_EQ(res, 1);
 	EXPECT_TRUE(q.isEmpty());
+
 }
 TEST(test_lib_queue, can_get_top) {
 	Queue<int> q(5);
@@ -109,5 +107,5 @@ TEST(test_lib_queue, can_use_pop) {
 TEST(test_lib_queue, cant_use_pop_when_stack_empty) {
 	Queue<int> q(5);
 	ASSERT_ANY_THROW(q.pop());
-}
+}*/
 

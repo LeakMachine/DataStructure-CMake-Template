@@ -89,12 +89,12 @@ public:
     void push(const Type& val) {
         if (!isFull()) {
             end++;
-            list.push_back(val);
+            list.push_front(val);
         }
         else {
             if (isFull() && top1 != 0) {
                 end = size - top1;
-                list.push_back(val);
+                list.push_front(val);
                 top1 = 0;
             }
             else {

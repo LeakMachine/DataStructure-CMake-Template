@@ -37,7 +37,7 @@ bool isCorrect(std::string BracketsSequence) {
 		if (openingChar(tempChar)) {
 			tempStack.push(tempChar);
 		}
-		else if (i == 0 && closingChar(tempChar)) {
+		else if (tempStack.isEmpty() && closingChar(tempChar)) {
 			return false;
 		}
 		else if (matchChar(tempStack.top(), tempChar)) {
@@ -52,7 +52,6 @@ bool isCorrect(std::string BracketsSequence) {
 	else
 		return true;
 }
-
 TEST(test_main, correct_string_is_recognised) {
 	std::string testString("[()](([]){})");
 
@@ -78,4 +77,16 @@ TEST(test_main, recognises_incorrect_character) {
 	std::string testString("<}>(){}[]");
 
 	ASSERT_ANY_THROW(isCorrect(testString));
-}*/
+}
+TEST(test_main, incorrect_string_is_recognised_extra) {
+	std::string testString("[()](([]){})[");
+
+	EXPECT_FALSE(isCorrect(testString));
+}
+TEST(test_main, incorrect_string_is_recognised_extra_2) {
+	std::string testString("[()](([]){})]");
+
+	EXPECT_FALSE(isCorrect(testString));
+}
+
+*/
