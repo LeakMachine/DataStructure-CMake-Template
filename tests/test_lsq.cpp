@@ -1,7 +1,7 @@
 // Copyright 2022 Marina Usova
 #include <gtest.h>
 #include "../lib_lsq/lsq.h"
-/*TEST(test_lib_stack, can_create_stack) {
+TEST(test_lib_stack, can_create_stack) {
 	ASSERT_NO_THROW(Stack<int> s1(10));
 }
 TEST(test_lib_stack, cant_create_stack_if_negative_size) {
@@ -107,5 +107,46 @@ TEST(test_lib_queue, can_use_pop) {
 TEST(test_lib_queue, cant_use_pop_when_stack_empty) {
 	Queue<int> q(5);
 	ASSERT_ANY_THROW(q.pop());
-}*/
+}
+TEST(test_lib_queue_pr_in, can_use_priority_queue_in_correctly) {
+	QueuePrIn<int> s(5);
+	std::pair<int, int> val5(10, 1);
+	std::pair<int, int> val3(7, 2);
+	std::pair<int, int> val4(3, 2);
+	std::pair<int, int> val2(5, 2);
+	std::pair<int, int> val(6, 3);
+	s.push(val5);
+	s.push(val);
+	s.push(val3);
+	s.push(val4);
+	s.push(val2);
+	std::pair<int, int> res;
+	s.pop();
+	s.pop();
+	s.pop();
+	s.pop();
+	res = s.top();
+	EXPECT_EQ(res.first, 6);
+	EXPECT_FALSE(s.isEmpty());
+}
+TEST(test_lib_queue_pr_out, can_use_priority_queue_out_correctly) {
+	QueuePrOut<int> s(5);
+	std::pair<int, int> val5(10, 1);
+	std::pair<int, int> val3(7, 2);
+	std::pair<int, int> val4(3, 2);
+	std::pair<int, int> val2(5, 2);
+	std::pair<int, int> val(6, 3);
+	s.push(val3);
+	s.push(val);
+	s.push(val5);
+	s.push(val4);
+	s.push(val2);
+	std::pair<int, int> res;
+	res = s.pop();
+	res = s.pop();
+	res = s.pop();
+	res = s.pop();
+	EXPECT_EQ(res.first, 5);
+	EXPECT_FALSE(s.isEmpty());
+}
 

@@ -5,12 +5,16 @@
 #include <list>
 #include <iostream>
 
+template <class Type> class CNode;
+template <class Type> class CList;
+
+template <class Type>
 class CNode {
-	int data;
+	Type data;
 	CNode* next;
 
 public:
-	CNode(int _data) {
+	CNode(Type _data) {
 		data = _data;
 		next = nullptr;
 	}
@@ -21,17 +25,19 @@ public:
 		std::cout << data << " -> ";
 	}
 
-	friend class CList;
+	friend class CList<Type>;
 };
 
+template <class Type>
 class CList {
-	CNode* head;
-	CNode* tail;
-
+	CNode<Type>* head;
+	CNode<Type>* tail;
+	size_t size;
 public:
 	CList() {
 		head = nullptr;
 		tail = nullptr;
+		size = 0;
 	}
 	bool isEmpty() {
 		if (head == nullptr)
@@ -39,17 +45,26 @@ public:
 		else
 			return false;
 	}
-	size_t size() {
-		size_t len = 0;
-		CNode* head_copy = head;
-		while (head_copy != nullptr) {
-			head_copy = head_copy->next;
-			len++;
-		}
-		return len;
+	void clr() {
+		while (head != nullptr)
+			pop_front();
 	}
-	void push_back(int _data) {
-		CNode* new_node = new CNode(_data);
+	void cpy(const CList& obj) {
+		clr();
+		CNode<Type>* tempNode = obj.head;
+
+		for (int i = 0; i < obj.size && tempNode->next != nullptr; i++)
+		{
+			push_back(tempNode->data);
+			tempNode = tempNode->next;
+		}
+		if (obj.size != 0 && tempNode == obj.tail) {
+			push_back(tempNode->data);
+		}
+		size = obj.size;
+	}
+	void push_back(Type _data) {
+		CNode<Type>* new_node = new CNode<Type>(_data);
 		if (head == nullptr) {
 			head = new_node;
 			tail = new_node;
@@ -58,9 +73,10 @@ public:
 			tail->next = new_node;
 			tail = new_node;
 		}
+		size++;
 	}
-	void push_front(int _data) {
-		CNode* new_node = new CNode(_data);
+	void push_front(Type _data) {
+		CNode<Type>* new_node = new CNode<Type>(_data);
 		if (head == nullptr) {
 			head = new_node;
 			tail = new_node;
@@ -69,38 +85,80 @@ public:
 			new_node->next = head;
 			head = new_node;
 		}
+		size++;
 	}
-	void insert(CNode* _pos, int _data) {
-		if (_pos == nullptr)
+	Type remove(int _i) {
+		size_t len = 0;
+		len = this->size;
+		if (_i < 0 || _i > len - 1)
+			throw("can't remove in nullptr");
+		if (_i == 0) {
+			size--;
+			return this->pop_back();
+		}
+		else if (_i == size - 1) {
+			size--;
+			return this->pop_front();
+		}
+		else {
+			CNode<Type>* _pos = head;
+			CNode<Type>* _pos2 = head;
+			for (int i = 0; i < _i-1; i++) {
+				_pos2 = _pos2->next;
+			}
+			for (int i = 0; i < _i; i++) {
+				_pos = _pos->next;
+			}
+			_pos2->next = _pos->next;
+			CNode<Type>* toRet = _pos;
+			Type tempType = toRet->data;
+			delete _pos;
+			size--;
+			return tempType;
+		}
+	}
+	void insert(int _i, Type _data) {
+		size_t len = 0;
+		len = this->size;
+		if (_i < 0 || _i > len - 1)
 			throw("can't insert in nullptr");
 		else {
-			CNode* new_node = new CNode(_data);
+			CNode<Type>* _pos = head;
+			for (int i = 0; i < _i; i++) {
+				while (_pos->next != tail) {
+					_pos = _pos->next;
+				}
+			}
+			CNode<Type>* new_node = new CNode<Type>(_data);
 			new_node->next = _pos->next;
 			_pos->next = new_node;
 			if (new_node->next == nullptr) {
 				tail = new_node;
 			}
 		}
+		size++;
 	}
 
-	int pop_front() {
-		CNode* toRet = head;
+	Type pop_front() {
+		CNode<Type>* toRet = head;
+		Type tempType = toRet->data;
 		if (!(head == nullptr)) {
-			CNode* toDel = head;
+			CNode<Type>* toDel = head;
 			head = head->next;
 			delete toDel;
-			return head->data;
+			return tempType;
 		}
 		if (head == nullptr) {
 			tail = nullptr;
-			return toRet->data;
+			return tempType;
 		}
+		size--;
 	}
-	int pop_back() {
-		CNode* toRet = tail;
-		int temp = toRet->data;
+	Type pop_back() {
+		CNode<Type>* toRet = tail;
+		Type temp = toRet->data;
 		if (head != tail) {
-			CNode* toDel = head;
+			CNode<Type>* toDel = head;
 			while (toDel->next != tail) {
 				toDel = toDel->next;
 			}
@@ -109,11 +167,11 @@ public:
 			return temp;
 		}
 		else {
-			delete tail;
-			delete head;
+			tail = nullptr;
+			head = nullptr;
 			return temp;
 		}
-	
+		size--;
 	}
 
 };
